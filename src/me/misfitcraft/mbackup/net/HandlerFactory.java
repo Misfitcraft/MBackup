@@ -1,21 +1,31 @@
 package me.misfitcraft.mbackup.net;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class HandlerFactory {
 	/*Lazy implementation but fine for internal use when the config is properly configured*/
+	
+	static final String[] regexes = {"^ftp\\|.*\\|.*\\|.+\\|[0-9]+$", "file:\\/\\/.+", "^https?\\:\\/\\/.+\\|.*\\|.*$"};
+	
 	public static NetHandler getHandler(String connectionString) {
-		if(connectionString.split("\\|")[0].equalsIgnoreCase("ftp")) {
-			return new FTPHandler(connectionString);
-		} else {
-			switch (connectionString.split("://")[0]) {
-			case "http":
-				return new WebDAVHandler(connectionString);
-			case "https":
-				return new WebDAVHandler(connectionString);
-			case "file":
-				return new LocalFSHandler(connectionString);
-			default:
-				return null;
+		
+		for (int i = 0; i < regexes.length; i++) {
+			Pattern p = Pattern.compile(regexes[i]);
+			Matcher m = p.matcher(connectionString);
+			
+			if (m.matches()) {
+				switch(i) {
+					case 0:
+						return new FTPHandler(connectionString);
+					case 1:
+						return new LocalFSHandler(connectionString);
+					case 2:
+						return new WebDAVHandler(connectionString);
+				}
 			}
 		}
+		
+		return null;
 	}
 }
