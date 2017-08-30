@@ -1,0 +1,26 @@
+#All paths should be given with respects to the server root and denominated by the / seperator
+#IE "world" or "world/data" use "." in the folders list to backup EVERYTHING
+
+folders: ["world", "world_nether", "world_the_end"]
+files: ["server.properties", "whitelist.json", "banned-ips.json", "bukkit.yml"]
+
+#Use this to back up a list of the files in a folder
+flist: ["plugins"]
+
+#set the name of the backup zip
+backupname: "servername_backup-%DATE%-%TIME%"
+
+###DESTINATIONS TO BACKUP TO###
+#If you are using WebDAV then use the form http(s)://example.address|username|password (and leave the / off the end of the address)
+#If you are using an ftp server use the form ftp|username|password|example.address|port(usually 21)
+#if you want a local backup use the form file://folder-path (use system seperator for separation, IE / in *nix or \\ in windows)
+dest: ["ftp|username|password|example.address|21", "file://backups"]
+
+#ftp/WebDAV backup folder path (Use / for separation)
+ftpfolder: "servername-backup"
+
+#Attempt to delete backups more than X days old (Can use decimal points)
+deleteafter: 10
+
+#Backup every X hours (Can use decimal points)
+backuptime: 4

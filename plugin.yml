@@ -1,0 +1,15 @@
+name: MBackup
+version: 0.0.1
+main: me.misfitcraft.mbackup.MBackup
+authors: ["Tom Merchant"]
+commands:
+    backup:
+      description: "Starts server backup"
+      usage: "/mbackup"
+      permission: "backup"
+    mbackup:
+      description: "Starts server backup"
+      usage: "/mbackup"
+      permission: "backup"
+
+    
