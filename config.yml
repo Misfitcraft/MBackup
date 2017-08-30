@@ -14,7 +14,7 @@ backupname: "servername_backup-%DATE%-%TIME%"
 #If you are using WebDAV then use the form http(s)://example.address|username|password (and leave the / off the end of the address)
 #If you are using an ftp server use the form ftp|username|password|example.address|port(usually 21)
 #if you want a local backup use the form file://folder-path (use system seperator for separation, IE / in *nix or \\ in windows)
-dest: ["ftp|username|password|example.address|21", "file://backups"]
+dest: ["file://backups"]
 
 #ftp/WebDAV backup folder path (Use / for separation)
 ftpfolder: "servername-backup"

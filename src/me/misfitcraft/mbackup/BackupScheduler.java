@@ -42,6 +42,6 @@ public class BackupScheduler {
 				handler.startBackup();
 			}
 			
-		}, (int)(backupPeriod * 3600), (int)(backupPeriod * 3600));
+		}, (int)(backupPeriod * 72000), (int)(backupPeriod * 72000));
 	}
 }
