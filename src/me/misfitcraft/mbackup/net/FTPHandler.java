@@ -57,7 +57,7 @@ public class FTPHandler extends NetHandler {
 			
 			File f = new File(path);
 			
-			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f));
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f), 4096);
 			
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
 			

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -67,7 +68,7 @@ public class BackupHandler {
 		File f = new File(backupFormat);
 		
 		try {
-			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(f));
+			ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
 			
 			for(String list : flist) {
 				File folder = new File(list);
@@ -116,19 +117,24 @@ public class BackupHandler {
 				}
 			}
 			
+			byte[] nextBytes = new byte[512];
+			int len = 0;
+			
 			for(String file : files){
 				File backupFile = new File(file);
 				if(backupFile.isFile()) {
+					for (int i = 0; i < nextBytes.length; i++) {
+						nextBytes[i] = 0;
+					}
 					ZipEntry ze = new ZipEntry(file);
 					zos.putNextEntry(ze);
 					
-					BufferedInputStream br = new BufferedInputStream(new FileInputStream(backupFile));
+					BufferedInputStream br = new BufferedInputStream(new FileInputStream(backupFile), 4096);
 					
-					int nextByte;
-					
-					while((nextByte = br.read()) != -1) {
-						zos.write(nextByte);
+					while((len = br.read(nextBytes, 0, 512)) != -1) {
+						zos.write(nextBytes, 0, len);
 					}
+					
 					zos.flush();
 					br.close();
 				}

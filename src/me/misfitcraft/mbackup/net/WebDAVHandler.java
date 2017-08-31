@@ -29,7 +29,7 @@ public class WebDAVHandler extends NetHandler {
 		try {
 			sardine.createDirectory(URL + "/" + folder);
 			
-			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f));
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f), 4096);
 			sardine.put(URL + "/" + folder + "/" + f.getName(), bis);
 			bis.close();
 		} catch (IOException e) {

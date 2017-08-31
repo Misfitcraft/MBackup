@@ -27,13 +27,14 @@ public class LocalFSHandler extends NetHandler {
 		
 		try {
 			if(localFile.isDirectory()) {
-				BufferedInputStream br = new BufferedInputStream(new FileInputStream(srcFile));
-				BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(destFile));
+				BufferedInputStream br = new BufferedInputStream(new FileInputStream(srcFile), 4096);
+				BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(destFile), 4096);
 				
-				int nextByte;
+				byte[] nextBytes = new byte[512];
+				int len;
 				
-				while((nextByte = br.read()) != -1) {
-					bo.write(nextByte);
+				while((len = br.read(nextBytes, 0, 512)) != -1) {
+					bo.write(nextBytes, 0, len);
 				}
 				
 				bo.close();
