@@ -24,6 +24,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 
 import me.misfitcraft.mbackup.net.HandlerFactory;
 import me.misfitcraft.mbackup.net.NetHandler;
@@ -48,6 +49,14 @@ public class BackupHandler {
 		}
 		
 		pluginInstance.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "BACKUP STARTING! Expect " + ChatColor.RED + "lag.");
+		
+		pluginInstance.getServer().broadcastMessage(ChatColor.GREEN + "Saving worlds!");
+		
+		for (World w : pluginInstance.getServer().getWorlds()) {
+			w.save();
+		}
+		
+		pluginInstance.getServer().broadcastMessage(ChatColor.GREEN + "Generating backup file, you will not be able to modify the world.");
 		
 		//We NEED to do the reading on the main thread to avoid race conditions like the world being written to while we are reading
 		
@@ -148,6 +157,8 @@ public class BackupHandler {
 			FileWriter fw = new FileWriter(checkfile);
 			fw.write(checksum);
 			fw.close();
+			
+			pluginInstance.getServer().broadcastMessage(ChatColor.GREEN + "Backup file generated, starting file transfer! You can now play as normal, network lag possible.");
 			
 		} catch (IOException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
